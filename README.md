@@ -12,7 +12,7 @@ $ git clone https://github.com/well-iam/RL24-Homework3 .
 ```
 Alternatively, use:
 ```
-$ git clone https://github.com/well-iam/RL24-Homework3
+$ git clone https://github.com/Robertorocco/RL24-Homework3
 ```
 
 Build the two packages
