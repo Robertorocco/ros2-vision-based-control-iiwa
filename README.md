@@ -1,28 +1,47 @@
-# Homework3
+# Advanced Vision-Based Control of a 7-DOF Robotic Arm in ROS2
 
-## :package: About
+![Robot in Gazebo](placeholder.gif)  🤖 Project Overview
 
-This package contains the developed code for the third homework of the Robotics Lab 2024/25 Course. The authors of the package are:
-William Notaro, Chiara Panagrosso, Salvatore Piccolo, Roberto Rocco
+This repository contains the implementation of a vision-based control system for a 7-DOF KUKA iiwa robotic manipulator within the ROS2 and Gazebo simulation environment. The project focuses on developing a robust controller capable of visually tracking objects and performing complex, vision-guided tasks. It demonstrates the integration of perception, planning, and control in a modern robotics software framework.
 
-## :hammer: Build
-Clone this package in the `src` folder of your ROS 2 workspace.  If you want to only clone the content files without creating the repo folder (only works if the destination folder is empty), use:
-```
-$ git clone https://github.com/Robertorocco/RL24-Homework3 .
-```
-Alternatively, use:
-```
-$ git clone https://github.com/Robertorocco/RL24-Homework3
-```
+---
 
-Build the two packages
-```
-$ colcon build
-```
-Source the setup files
-```
-$ source ~/ros2_ws/install/setup.bash
-```
+## ✨ Key Features
+
+* **Custom Gazebo Environment**: A custom Gazebo world was developed, featuring a 15 cm radius blue spherical object for detection tasks.
+* **Dynamic Camera Integration**: The robot is equipped with an end-effector camera that can be dynamically loaded via launch file arguments (`use_vision:=true`).
+* **OpenCV-Based Object Detection**: A ROS2 node subscribes to the camera's image stream and uses OpenCV's functions to identify the target object in real-time.
+* **Vision-Based "Look-at-Point" Control**: Implementation of a sophisticated controller that orients the robot's camera towards a target (like an ArUco marker).
+* **Hybrid Dynamic Control**: The system merges a dynamic inverse dynamics controller for precise joint and Cartesian space tracking with the vision-based orientation controller, allowing the robot to perform a primary task (e.g., follow a trajectory) while simultaneously keeping an object in its field of view.
+
+---
+
+## 🛠️ Core Technologies & Skills
+
+* **Frameworks & Libraries**: ROS2, Gazebo, C++, OpenCV, `ros2_control`, `xacro`
+* **Robotics Concepts**:
+    * **Kinematics & Dynamics**: Inverse Kinematics, Inverse Dynamics, Jacobian-based Control
+    * **Control Theory**: Vision-Based Control (Visual Servoing), Null-Space Projection for Task Prioritization
+    * **Computer Vision**: Real-time Blob Detection and Image Processing
+    * **Simulation**: Custom world and model creation in Gazebo, sensor integration
+
+---
+
+## 🔬 Control Strategy
+
+The core of the vision-based controller is the "look-at-point" task, which uses the following control law to generate joint velocity commands:
+
+$$ \dot{q} = k(LJ_{c})^{\dagger}s_{d} + N\dot{q}_{0} $$
+
+Where:
+* **$s_{d}$**: The desired unit vector $[0,0,1]$ pointing from the camera to the object.
+* **$J_{c}$**: The camera Jacobian that relates camera velocity to feature changes.
+* **$L(s)$**: The interaction matrix mapping camera velocities to changes in the feature vector $s$.
+* **$N$**: The null-space projection matrix, $(I-(LJ)^{\dagger}LJ)$, allowing for secondary tasks.
+
+This controller was integrated with an inverse dynamics controller to track both a position trajectory and the vision-based orientation task simultaneously.
+
+---
 
 ## :white_check_mark: Usage
 - BLOB DETECTION MODE:  
