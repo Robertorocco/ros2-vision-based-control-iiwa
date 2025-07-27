@@ -5,6 +5,12 @@
 
 This repository contains the implementation of a vision-based control system for a 7-DOF KUKA iiwa robotic manipulator within the ROS2 and Gazebo simulation environment. The project focuses on developing a robust controller capable of visually tracking objects and performing complex, vision-guided tasks. It demonstrates the integration of perception, planning, and control in a modern robotics software framework.
 
+## 📄 Documentation
+
+Full project's documentation is aviable in PDF format
+
+**[PDF Documentation](./Documentation.pdf)**
+
 ---
 
 ## ✨ Key Features
